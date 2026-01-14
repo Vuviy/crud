@@ -9,21 +9,5 @@
 </head>
 <body>
 
-<div>
-    <?php if ($user): ?>
-    user : <?php echo $user['email']; ?>
-    <a href="/logout">logout</a>
-    <?php endif; ?>
-</div>
-
-<div>
-    <h1>Register</h1>
-    <a href="/form">register</a>
-</div>
-
-<div>
-    <h1>about</h1>
-    <a href="/about">about</a>
-</div>
 </body>
 </html>

@@ -8,16 +8,15 @@ return [
     'connections' => [
         'sqlite' => [
             'driver' => 'sqlite',
-//            'database' => '/mnt/c/projects/database.sqlite',
             'database' => __DIR__ . '/../storage/database.sqlite',
         ],
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => 'mysql',
-            'dbname' => 'app',
-            'user' => 'app',
-            'password' => 'secret',
+            'host' => 'db',
+            'dbname' => 'crud',
+            'user' => 'root',
+            'password' => 'root',
         ],
 
         'pgsql' => [

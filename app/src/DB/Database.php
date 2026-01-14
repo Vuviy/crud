@@ -31,14 +31,14 @@ final class Database
                 break;
             case 'mysql':
                 $this->connection = new PDO(
-                    "mysql:host={$settings['host']};dbname={$settings['dbname']}",
+                    "mysql:host={$settings['host']};dbname={$settings['dbname']};charset=utf8mb4",
                     $settings['user'],
                     $settings['password']
                 );
                 break;
             case 'pgsql':
                 $this->connection = new PDO(
-                    "pgsql:host={$settings['host']};dbname={$settings['dbname']}",
+                    "pgsql:host={$settings['host']};port=5432;dbname={$settings['dbname']}",
                     $settings['user'],
                     $settings['password']
                 );
