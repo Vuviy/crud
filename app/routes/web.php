@@ -1,5 +1,8 @@
 <?php
 
 /** @var \App\Router $router */
-//$router->get('/', [MainController::class, 'index']);
+
+use App\Controller\MainController;
+
+$router->get('/', [MainController::class, 'index']);
 
