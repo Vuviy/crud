@@ -29,7 +29,7 @@ final class Router
 
         $controllerInstance = new $controller();
 
-        return $controllerInstance->$methodName();
+        return $controllerInstance->$methodName(new Request());
     }
 
 }

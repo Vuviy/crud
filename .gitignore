@@ -2,3 +2,4 @@
 app/vendor
 app/logs
 docker/db
+public/

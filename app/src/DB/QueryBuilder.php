@@ -12,6 +12,8 @@ final class QueryBuilder
     private array $bindings = [];
     private ?string $orderBy = null;
     private ?int $limit = null;
+    private ?int $offset = null;
+
 
     public function __construct(Database $db, string $table)
     {
@@ -27,9 +29,40 @@ final class QueryBuilder
         return $this;
     }
 
+    public function whereIn(string $column, array $values): self
+    {
+        if (0 >= count($values)) {
+            $this->wheres[] = '1 = 0';
+            return $this;
+        }
+
+        $placeholders = [];
+
+        foreach ($values as $value) {
+            $placeholder = ':' . str_replace('.', '_', $column) . count($this->bindings);
+            $placeholders[] = $placeholder;
+            $this->bindings[$placeholder] = $value;
+        }
+
+        $this->wheres[] = sprintf(
+            '%s IN (%s)',
+            $column,
+            implode(', ', $placeholders)
+        );
+
+        return $this;
+    }
+
+
     public function orderBy(string $column, string $direction = 'ASC'): self
     {
         $this->orderBy = "$column $direction";
+        return $this;
+    }
+
+    public function offset(int $offset): self
+    {
+        $this->offset = $offset;
         return $this;
     }
 
@@ -52,6 +85,9 @@ final class QueryBuilder
         if ($this->limit !== null) {
             $sql .= " LIMIT {$this->limit}";
         }
+        if ($this->offset !== null) {
+            $sql .= " OFFSET {$this->offset}";
+        }
 
         return $this->db->select($sql, $this->bindings);
     }
@@ -63,6 +99,13 @@ final class QueryBuilder
         return $results[0] ?? null;
     }
 
+    public function whereFullText(array $columns, string $value): self
+    {
+        $placeholder = ':search' . count($this->bindings);
+        $this->wheres[] = "MATCH (" . implode(',', $columns) . ") AGAINST ($placeholder IN BOOLEAN MODE)";
+        $this->bindings[$placeholder] = $value;
+        return $this;
+    }
     public function insert(array $data): int
     {
         $columns = array_keys($data);

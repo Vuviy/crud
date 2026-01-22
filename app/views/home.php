@@ -11,5 +11,21 @@
 
 
 <h1>home</h1>
+
+<a href="/add_product">add_product</a>
+
+<h1>Products</h1>
+<?php foreach ($products as $product) {?>
+
+      <div>
+
+    <p>category:  <?php echo $product->getCategory()->getTitle(); ?></p>
+    <p>prod title: <?php echo $product->getTitle(); ?></p>
+    <p>img:</p>
+<?php foreach ($product->getImages() as $img) {?>
+        <img src="public/uploads/<?php echo $img; ?>" alt="">
+<?php }?>
+      </div>
+<?php }?>
 </body>
 </html>
